@@ -1,4 +1,4 @@
-//2. 낱개규칙 전부 정하고 html과 연결하는 규칙 함수 정하기
+//2. 아래의 낱개규칙 전부 정한 후 html과 연결하는 규칙 함수 정하기
 
 function setPigLatin(input,output){
   let objInput = document.querySelector('#'+input);
