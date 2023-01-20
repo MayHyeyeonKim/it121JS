@@ -1,15 +1,15 @@
-table {
-  width: 90%;
-  border-top: 1px solid #444444;
-  border-collapse: collapse;
-}
-th, td {
-  border-bottom: 1px solid #7c2a00;
-  border-right: 1px solid #7c2a00;
-  border-left: 1px solid #7c2a00;
-  padding: 10px;
-  text-align: center;
-}
-#others {
-  margin-top: 20px;
-}
+table, tfoot {
+    width: 90%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td{
+    border-bottom: 1px solid #7c2a00;
+    border-right: 1px solid #7c2a00;
+    border-left: 1px solid #7c2a00;
+    padding: 10px;
+    text-align: center;
+  }
+  #others {
+    margin-top: 20px;
+  }
