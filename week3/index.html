@@ -4,11 +4,71 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  
   <title>May's IT121 JavaScript</title>
 </head>
 <body>
     <h2>May's IT121 JavaScript Week3 Assignment</h2>
-  <h3>HW 3 - </h3>
-  
+  <h3>HW 3 - Making the grade </h3>
+  <div>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Score</th>
+      </thead>
+      <tbody id="tableBody">
+      </tbody>
+    </table>
+    <div id="others"></div>
+  </div>
+  <script>
+  window.onload = () => {
+    var grades = "jim|25, sue|32, mary|34, ann|22, ted|28, frank|15, lisa|19, mike|30, ahn|26, vishaya|27";
+    /*
+    1. 사람|점수를 한쌍으로 문자열 나누기
+    2. 사람, 점수 구분되게 문자열 나누기
+    2-1. 사람 이름 첫글자 대문자 
+    3. 나눈 데이터를 JSON 으로 보관
+    4. JSON 데이터를 화면에 뿌리기
+    5. 총 학생숫자, 낮은점수 높은 점수, 평균점수 계산해서 보여주기
+    */
+    let studentScoreList = []
+    //1. 사람|점수를 한쌍으로 문자열 나누기
+    let studentsScores = grades.split(",");
+    // 2. 사람, 점수 구분되게 문자열 나누기
+    for(let row of studentsScores){
+      let studentScore = row.trim().split('|');
+      //2-1. 사람 이름 첫글자 대문자 
+      let studentName = studentScore[0].substr(0,1).toUpperCase()+studentScore[0].substr(1);
+      let score = parseInt(studentScore[1]);
+      //3. 나눈 데이터를 JSON 으로 보관
+      studentScoreList.push({name:studentName, score:score});
+    }
+    //4. JSON 데이터를 화면에 뿌리기
+    let tableBody = document.querySelector('#tableBody');
+    let htmlContent = '';
+    for(let row of studentScoreList){
+      htmlContent += `<tr><td>${row.name}</td><td>${row.score}</td></tr>`;
+    }
+    tableBody.innerHTML = htmlContent;
+    //5. 총 학생숫자, 낮은점수 높은 점수, 평균점수 계산해서 보여주기 
+    let totalStudentCount = studentScoreList.length;
+    let minScore = 25;
+    let maxScore = 25;
+    let sumScore = 0;
+    for(let row of studentScoreList){
+      sumScore += row.score;
+      maxScore = Math.max(maxScore,row.score);
+      minScore = Math.min(minScore,row.score);
+    }
+
+    let others = document.querySelector('#others');
+    others.innerHTML = `Total# : ${totalStudentCount}
+    <br>Max Score : ${maxScore}
+    <br>Min Score : ${minScore}
+    <br> Average : ${sumScore/totalStudentCount}`;
+  };
+  </script>
 </body>
 </html>
