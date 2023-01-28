@@ -5,10 +5,72 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>May's IT121 JavaScript</title>
+   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
 </head>
 <body>
     <h2>May's IT121 JavaScript Week4 Assignment</h2>
-  <h3>HW 4 - </h3>
+  <h3>HW 4 -  Pass / Fail</h3>
+
+  
+<h1>Functions & validation</h1>
+
+<form id="form1" action="#" onsubmit="return validateForm(this);">
+  first name: <input type="text" name="firstname"><br>
+  last name: <input type="text" name="lastname"><br>
+  password: <input type="text" name="password"><br>
+  <button >Check</button>
+</form>
+
+<hr><div id="message"></div>
+
+<script>
+
+// add validatePassword function here
+const validatePassword = (password) =>{
+  const upperCases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowerCases = 'abcdefghijklmnopqrstuvwxyz';
+  if(password.length < 8) return false;
+  let hasUpper = false;
+  let hasLower = false;
+  for(let c of password){
+    if(upperCases.includes(c)) hasUpper = true;
+    if(lowerCases.includes(c)) hasLower = true;
+  }
+  if(!hasUpper || !hasLower) return false;
+
+  return true;
+}
+
+const validateForm = (myForm) => {
+
+  var firstname = myForm.firstname.value; // get text of firstname field
+  let lastname = myForm.lastname.value;
+  let password = myForm.password.value;
+  // update 'message' DIV with appropriate wording
+  $("#message").html("Button clicked");
+
+  /* Form validation code goes here
+  */
+  if(!firstname){
+    $("#message").html('First name is invalidate.');
+    return false;
+  } 
+  if(!lastname){
+    $("#message").html('Last name is invalidate.');
+    return false;
+  }
+  if(!validatePassword(password)){
+    $("#message").html('Password is invalidate.');
+    return false;
+  }
+  
+  $("#message").html("All 3 fields are valid.");
+  return false; // prevent page reload
+}
+
+
+
+</script>
   
 </body>
 </html>

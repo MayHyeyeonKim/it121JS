@@ -26,11 +26,11 @@ function setPigLatin(input,output){
 //1. 아래의 함수들을 먼저 짠다
 
 function getVowelStr(str){
-  return str + "way"; //모음을 let으로 정의하지 않아도 될까?
+  return str + "way"; //
 }
 
 function getOneConsonantStr(str){
-  if(str.length < 1) return str; //1보다 작으면 0개 아닌가?
+  if(str.length < 1) return str; //1보다 작으면 0
   return str.substr(1) + str.charAt(0) + "ay"; //단어의 두번째글자부터쭉 + 단어의첫번째글자 + ay
 }
 function getTwoConsonantStr(str){
