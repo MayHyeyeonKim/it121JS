@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="output">
+
+  </div>
+  <script>
+    window.onload = () =>{
+      let faces = ['Ace','2','3','4','5','6','7','8','9','10','Jack','Queen','King'];
+      let shapes = ['Spades','Hearts','Diamonds','Clubs'];
+      let deck = [];
+      for(let face of faces)
+        for(let shape of shapes)
+          deck.push({value:face,suit:shape});
+          
+      let cardsSet = new Set();
+      while(cardsSet.size < 5){
+        let num = Math.floor(Math.random()*52);
+        cardsSet.add(num);
+      }
+      let res = '';
+      for(let cardSet of cardsSet){
+        let card = `${deck[cardSet].value} of ${deck[cardSet].suit}`;
+        res += card+'<br>';
+      }
+      document.querySelector('#output').innerHTML = res;
+    }
+  </script>
+</body>
+</html>
