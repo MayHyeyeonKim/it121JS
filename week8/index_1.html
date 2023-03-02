@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Week8 일기 예보</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+#weatherTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#weatherTable td, #weatherTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#weatherTable tr:nth-child(even){background-color: #f2f2f2;}
+
+#weatherTable tr:hover {background-color: #ddd;}
+
+#weatherTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+<body>
+	<h1>5일 일기 예보</h1>
+	<form>
+		<label for="city" style="margin-bottom: 20px">도시:</label>
+		<input type="text" id="city" name="city" style="margin-bottom: 20px">
+		<button type="submit" style="margin-bottom: 20px">조회</button>
+	</form>
+	<div id="forecast"></div>
+  <table id="weatherTable" style="border: 1px solid black;">
+    <thead>
+      <tr>
+        <th>City</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Min temperatures in Fahrenheit</th>
+        <th>Max temperatures in Fahrenheit</th>
+        <th>Weather description</th>
+        <th>Humidity</th>
+        <th>Weather icon</th>
+      </tr>
+
+    </thead>
+  </table>
+	<script>
+		const apiKey = "a557e05092bad9766a488cdb17c610d9"; 
+		const form = document.querySelector("form");
+    // const weatherTable = document.querySelector(#weatherTable);
+		// const forecastDiv = document.querySelector("#forecast");
+
+		form.addEventListener("submit", (event) => {
+			event.preventDefault();
+			const city = form.elements.city.value;
+      if (!city){
+        $('#city').css('border-color','red')
+          return;
+      }else
+        $('#city').css('border-color','black');
+      if (!checkSeach()) return;
+			const url = `https://api.openweathermap.org/data/2.5/forecast?q=${city},us&appid=${apiKey}`;
+      
+			fetch(url)
+				.then(response => {
+          if(response.status===200) return response.json();
+          throw Error(`${response.status} ${response.statusText}`);
+        })
+				.then(data => {
+          if (data.list.length === 0 ){
+              showMessage("데이터 없음")
+              return;
+          }
+          
+          var table = $("#weatherTable");
+          
+          $('#weatherTable').children('tr').remove(); //초기화
+          
+          $.each(data.list, function(i,item) {
+            var row = $("<tr></tr>");
+            row.append("<td>" + data.city.name + "</td>");
+            row.append("<td>" +  formattedDate(item.dt) + "</td>");
+            row.append("<td>" +  formattedTime(item.dt) + "</td>");
+            row.append("<td>" +  kelvinToF(item.main.temp_min) + "</td>");
+            row.append("<td>" +  kelvinToF(item.main.temp_max) + "</td>");
+            row.append("<td>" +  item.weather[0].description + "</td>");
+            row.append("<td>" +  item.main.humidity + "</td>");
+            row.append("<td><img src='http://openweathermap.org/img/w/" + item.weather[0].icon + ".png'></td>");
+            table.append(row);
+          });
+        })
+        .catch(error => {
+          showMessage(error);
+        });
+    });
+    function formattedDate(dt){
+      var forecastDate = new Date(dt * 1000);
+      const d = forecastDate.getDate()
+      const monName = forecastDate.toLocaleString('default', {month: 'short'});
+      const formattedDate = `${monName}. ${d}`;
+      return formattedDate;
+    }
+    function formattedTime(dt) {
+      var forecastTime = new Date(dt * 1000); //초단위변환
+      const options = {
+        hour: 'numeric'
+      }
+      const formattedTime = forecastTime.toLocaleString('en-US', options);
+      
+      return formattedTime;
+    }
+    const kelvinToF = (value) => {
+      let fahrenheit = (((Number(value) - 273.15)*9)/5) + 32;
+      return fahrenheit.toFixed(2);
+    }
+
+    const showMessage = (message) => {
+      $('#weatherTable').children('tr').remove();
+      let thLength = $('#weatherTable thead th').length;
+      var messageTr = $(`<tr><td colspan=${thLength} style="text-align:center">${message}</td></tr>`);
+      $('#weatherTable').append(messageTr);
+    }
+    
+    function checkSeach() {
+      const input = $('#city').val() //city 입력칸에 들어가 있는 값
+      // document.querySelector('#city').value //vanila
+      if (!isNaN(input)) {
+        showMessage("숫자 검색하지 마!")
+        return false;
+      }
+      return true;
+    }
+
+	</script>
+</body>
+</html>
