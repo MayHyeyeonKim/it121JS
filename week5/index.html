@@ -19,7 +19,7 @@ const deck = [];
 
 for (let face of faces) {
   for (let shape of shapes) {
-    deck.push({value: face, suit: shape});
+    deck.push(new card(face,shape));
   }
 }
 
@@ -37,6 +37,12 @@ const cardsSet = () => {
   $("#output").html(hand);
 
   return false; // prevent page reload
+}
+
+
+function card(value, suit){
+  this.value = value;
+  this.suit = suit;
 }
 
 </script>
