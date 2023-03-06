@@ -5,29 +5,167 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HW 9 - Draw me a picture</title>
+  	<style>
+		canvas {
+			border: 1px solid black;
+		}
+	</style>
 </head>
 <body>
   <canvas id="picasso" height="640" width="480"></canvas>
 <script>
   const canvas = document.getElementById("picasso");
   const ctx = canvas.getContext("2d");
-  
-  ctx.moveTo(10, 10);  // make sure pen starts in the right location
-  ctx.lineTo(110, 100);
-  ctx.lineTo(10,100);// draw line to end location
-  ctx.stroke();  // apply styles to make the line visible
 
-  ctx.rect(300,300,60,60);
-  ctx.strokeStyle = "yellow";
-  ctx.lineWidth = 10;
-  ctx.stroke();
+  let x = 50;
+  let y = 50;
+  let dx = 5;
+  let dy = 5;
+  const width = 50;
+  const height = 50;
+
+  const draw = () =>{
+    //line 가로
+    ctx.beginPath();
+    ctx.moveTo(0,320);
+    ctx.lineTo(480,320);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#fff2cc";
+    ctx.stroke();
   
-  ctx.beginPath();
-  ctx.arc(200, 200, 50, 0, 2*Math.PI);
-  ctx.stroke(); 
+    //line 가로
+    ctx.beginPath();
+    ctx.moveTo(240,0);
+    ctx.lineTo(240,260);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#e6ccff";
+    ctx.stroke();
+
+    //line 풀
+    ctx.beginPath();
+    ctx.moveTo(40,450);
+    ctx.lineTo(40,620);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#e6ffcc";
+    ctx.stroke();
+
+        //line 풀
+    ctx.beginPath();
+    ctx.moveTo(100,550);
+    ctx.lineTo(100,620);
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "#e6ffcc";
+    ctx.stroke();
+
+      //circle
+    ctx.beginPath();
+    ctx.arc(40,500,20,0,2*Math.PI);
+    ctx.fillStyle = "#ccf2ff";
+    ctx.fill();
   
+    // ctx.strokeStyle = "#ccd9ff";
+    // ctx.stroke();
+    
+    //rectangle
+    ctx.fillStyle = "#ccf2ff";
+    ctx.fillRect(250, 100, 100, 50);
+    
+    ctx.strokeStyle = "#d9ccff";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(250, 100, 100, 50);
+  
+    //circle
+    ctx.beginPath();
+    ctx.arc(400,75,30,0,2*Math.PI);
+    ctx.fillStyle = "#ccfff2";
+    ctx.fill();
+  
+    ctx.strokeStyle = "#ccd9ff";
+    ctx.stroke();
+  
+    //text
+
+    ctx.font = "italic bold 30px Times New Roman";
+  	ctx.fillStyle = "#ffcccc";
+  	ctx.fillText("Hi, May!", 190, 500);
+    
+  	ctx.font = "italic bold 50px Times New Roman";
+  	ctx.fillStyle = "#ffccd9";
+  	ctx.fillText("I love you", 150, 50);
 
 
+
+    //사랑표
+    ctx.beginPath();
+    ctx.moveTo(75, 40);
+    ctx.bezierCurveTo(75, 37, 70, 25, 50, 25);
+    ctx.bezierCurveTo(20, 25, 20, 62.5, 20, 62.5);
+    ctx.bezierCurveTo(20, 80, 40, 102, 75, 120);
+    ctx.bezierCurveTo(110, 102, 130, 80, 130, 62.5);
+    ctx.bezierCurveTo(130, 62.5, 130, 25, 100, 25);
+    ctx.bezierCurveTo(85, 25, 75, 37, 75, 40);
+    ctx.fillStyle = "#ffd9cc";
+    ctx.fill();
+
+    
+    //사랑표
+
+    ctx.beginPath();
+    ctx.moveTo(200, 200);
+    ctx.bezierCurveTo(175, 137, 180, 125, 150, 125);
+    ctx.bezierCurveTo(121, 129, 120, 162.5, 120, 162.5);
+    ctx.bezierCurveTo(120, 180, 140, 202, 175, 220);
+    ctx.bezierCurveTo(210, 202, 230, 180, 230, 162.5);
+    ctx.bezierCurveTo(230, 162.5, 230, 125, 200, 125);
+    ctx.bezierCurveTo(185, 125, 175, 137, 175, 140);
+    ctx.fillStyle = "#ffcccc";
+    ctx.fill();
+
+
+    //하트
+    const x = canvas.width / 2;
+    const y = canvas.height / 2;
+    
+    ctx.beginPath();
+    ctx.moveTo(x, y - 50);
+    ctx.quadraticCurveTo(x - 50, y - 90, x - 90, y - 50);
+    ctx.quadraticCurveTo(x - 110, y - 30, x - 110, y);
+    ctx.quadraticCurveTo(x - 110, y + 30, x - 90, y + 50);
+    ctx.quadraticCurveTo(x - 50, y + 90, x, y + 130);
+    ctx.quadraticCurveTo(x + 50, y + 90, x + 90, y + 50);
+    ctx.quadraticCurveTo(x + 110, y + 30, x + 110, y);
+    ctx.quadraticCurveTo(x + 110, y - 30, x + 90, y - 50);
+    ctx.quadraticCurveTo(x + 50, y - 90, x, y - 50);
+    ctx.fillStyle = "#ffccff";
+    ctx.fill();
+    // ctx.stroke();
+    ctx.closePath();
+  };
+  
+  //ani
+  const animate = () => {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw();
+    
+    ctx.fillStyle = "#d9ccff";
+    ctx.fillRect(x, y, width, height);
+    if (x + width > canvas.width || x < 0) {
+      dx = -dx;
+    }
+    if (y + height > canvas.height || y < 0) {
+      dy = -dy;
+    }
+    x += dx;
+    y += dy;
+
+    ctx.closePath();
+  };
+  
+  animate();
+
+
+  
 </script>
   
 </body>

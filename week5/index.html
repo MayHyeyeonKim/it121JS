@@ -27,18 +27,17 @@ const cardsSet = () => {
   let cardsSet = new Set();
   while (cardsSet.size < 5) {
     let num = Math.floor(Math.random() * 52);
-    cardsSet.add(num);
+    cardsSet.add(num % 52 + 1);
   }
   let hand = '';
   for (let cardSet of cardsSet) {
-    let Card = `${deck[cardSet].value} of ${deck[cardSet].suit}`;
-    hand += Card + '<br>';
+    let card = `${deck[cardSet].value} of ${deck[cardSet].suit}`;
+    hand += card + '<br>';
   }
   $("#output").html(hand);
 
   return false; // prevent page reload
 }
-
 
 function Card(value, suit){
   this.value = value;
